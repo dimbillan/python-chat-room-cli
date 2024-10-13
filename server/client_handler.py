@@ -14,7 +14,7 @@ cur = conn.cursor()
 onlineUsers = {}
 
 def handle_client(client_socket):
-    time.sleep(3)
+    #time.sleep(3)
     send(client_socket,
         "Welcome.\n"
         "Please choose an option:\n"

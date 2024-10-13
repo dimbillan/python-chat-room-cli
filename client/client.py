@@ -3,6 +3,8 @@ import threading
 import sys
 import os
 import time
+from message_handler import *
+from helpers import *
 
 def recv(sock):
     while True:
@@ -11,18 +13,16 @@ def recv(sock):
             if not received_message:
                 print("Connection closed by the server.")
                 print("Restarting...")
-                
-                if os.name == 'nt':
-                    os.system('cls')
-                else:
-                    os.system('clear')
-                    
+
+                clear()
+
                 time.sleep(1)
 
                 python = sys.executable
                 os.execl(python, python, *sys.argv)
 
-            print(f"{received_message}")
+            message_handler(received_message)
+            
         except Exception as e:
             print(f"Error receiving data: {e}")
             break
@@ -35,7 +35,7 @@ def run_client(host, port):
         threading.Thread(target=recv, args=(sock,), daemon=True).start()
 
         while True:
-            message = input()
+            message = input("")
             if message.lower() == 'exit':
                 print("Exiting...")
                 break
@@ -51,6 +51,9 @@ if __name__ == '__main__':
     try:
         host, port = server_address.split(":")
         port = int(port)
+
+        clear()
+    
     except ValueError:
         print("Invalid format. Please enter in 'ip:port' format.")
         exit(1)
