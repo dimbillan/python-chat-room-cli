@@ -18,7 +18,7 @@ def start_server(host, port):
 
     except:
         print("Error creating socket. Exiting...")
-        time.sleep(2)
+        time.sleep(1)
         exit(1)
 
     while True:

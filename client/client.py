@@ -3,6 +3,7 @@ import threading
 import sys
 import os
 import time
+import traceback
 from message_handler import *
 from helpers import *
 
@@ -21,10 +22,12 @@ def recv(sock):
                 python = sys.executable
                 os.execl(python, python, *sys.argv)
 
+            print("mh runs")
             message_handler(received_message)
-            
+
         except Exception as e:
             print(f"Error receiving data: {e}")
+            print(traceback.format_exc())
             break
 
 def run_client(host, port):
