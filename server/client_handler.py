@@ -12,9 +12,7 @@ db_path = os.path.join(os.getcwd(), "server/data/userdata.db")
 conn = sqlite3.connect(db_path, check_same_thread=False)
 cur = conn.cursor()
 
-def handle_client(client_socket):
-    with open("server/data/onlines.txt", "r",encoding="utf-8") as onlines:
-        onlineUsers = onlines.read()    
+def handle_client(client_socket):  
 
     time.sleep(0.5)
 
@@ -51,12 +49,12 @@ def handle_client(client_socket):
                     return
                 
                 username, password, status = result
-
-                if username in onlineUsers:
+                
+                if username in onlines("r"):
                     send(client_socket, ":-server:-alrdylogin") #You have already logged in
                     client_socket.close()
                     return
-
+                
                 if status == 1:
                     send(client_socket, ":-server:-kicked") #You have been kicked
                     client_socket.close()
@@ -65,7 +63,6 @@ def handle_client(client_socket):
                     send(client_socket, ":-server:-success") #Successful log in
                     threading.Thread(target=user_handler, args=(client_socket,username,)).start()
                     print("h")
-                    onlines.write(f"{username}\n")
                 else:
                     send(client_socket, ":-server:-invalid") #Failed: Invalid status
                     client_socket.close()

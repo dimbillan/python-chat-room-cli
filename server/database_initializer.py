@@ -21,5 +21,6 @@ username3, password3 = "c", hashlib.sha256("c3".encode("utf-8")).hexdigest()
 cur.execute("INSERT INTO userdata (username, password) VALUES (?, ?)", (username1, password1))
 cur.execute("INSERT INTO userdata (username, password) VALUES (?, ?)", (username2, password2))
 cur.execute("INSERT INTO userdata (username, password) VALUES (?, ?)", (username3, password3))
+cur.execute("INSERT INTO userdata (username, password) VALUES (?, ?)", ("ba", "ba"))
 
 conn.commit()

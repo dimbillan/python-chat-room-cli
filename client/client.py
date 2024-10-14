@@ -15,7 +15,7 @@ def recv(sock):
                 print("Connection closed by the server.")
                 print("Restarting...")
 
-                clear()
+                #clear()
 
                 time.sleep(1)
 
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         host, port = server_address.split(":")
         port = int(port)
 
-        clear()
+        #clear()
     
     except ValueError:
         print("Invalid format. Please enter in 'ip:port' format.")

@@ -18,3 +18,14 @@ def timestamp():
 
 def log():
     print()
+
+def onlines(writeOrread, content=None):
+    onlines = open("server/data/onlines.txt", "r+", encoding="utf-8")
+    if writeOrread == "r":
+        return onlines.read().splitlines()
+    
+    elif writeOrread == "w" and content != None:
+        onlines.write(content + "\n")
+
+    else:
+        print("Invalid argument")

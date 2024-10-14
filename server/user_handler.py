@@ -1,9 +1,11 @@
 from helpers import *
 import socket
 import time
-onlineUsers = {}
+import traceback
 
+onlineUsers = {}
 def user_handler(client_socket, username):
+    onlines("w",username)
     onlineUsers[username] = client_socket
     while True:
         x = recv(client_socket)

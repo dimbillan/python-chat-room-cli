@@ -25,7 +25,7 @@ def start_server(host, port):
 
         client_socket, client_address = server_socket.accept()
         print(f"Client connected: {client_address}")
-
+        print(type(client_socket))
         threading.Thread(target=handle_client, args=(client_socket,)).start()
 
 

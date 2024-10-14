@@ -6,23 +6,23 @@ init(autoreset=True)
 def message_handler(message):
     if message.startswith(":-server:-"):
         if message == ':-server:-success':
-            clear()
+            #clear()
             printc("green", "You have successfully logged in.")
 
         elif message == ":-server:-fail":
-            clear()
+            #clear()
             printc("red", "Invalid username or password.")
 
         elif message == ":-server:-alrdylogin":
-            clear()
+            #clear()
             printc("red","You are already logged in.")
 
         elif message == ":-server:-kicked":
-            clear()
+            #clear()
             printc("red","You have been kicked from the server.")
 
         elif message == ":-server:-invalid":
-            clear()
+            #clear()
             printc("red","Invalid command.")
 
         else:
