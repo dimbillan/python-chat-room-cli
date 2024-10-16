@@ -6,6 +6,7 @@ import traceback
 import os
 from helpers import *
 from user_handler import user_handler
+from user_handler import onlineUsers
 
 db_path = os.path.join(os.getcwd(), "server/data/userdata.db")
 
@@ -21,14 +22,11 @@ def handle_client(client_socket):
         "Please choose an option:\n"
         "1 - Login\n"
         "2 - Register\n")
-    
-
 
     while True:
         try:
             logorreg = recv(client_socket)
-            print(logorreg)
-            print(type(logorreg))
+            print(f"logorreg received {logorreg}")
             if logorreg == "1":
                 send(client_socket, "Enter your username:")
                 username = recv(client_socket)
@@ -50,7 +48,7 @@ def handle_client(client_socket):
                 
                 username, password, status = result
                 
-                if username in onlines("r"):
+                if username in onlineUsers:
                     send(client_socket, ":-server:-alrdylogin") #You have already logged in
                     client_socket.close()
                     return
@@ -61,13 +59,14 @@ def handle_client(client_socket):
 
                 elif status == 0 or status == 2:
                     send(client_socket, ":-server:-success") #Successful log in
-                    threading.Thread(target=user_handler, args=(client_socket,username,)).start()
-                    print("h")
+                    threading.Thread(target=user_handler, args=(client_socket, username)).start()
+                    return
+                
                 else:
                     send(client_socket, ":-server:-invalid") #Failed: Invalid status
                     client_socket.close()
                  
-            elif logorreg == "register":
+            elif logorreg == "2":
 
                 username = client_socket.recv(1024).decode("utf-8")
                 password = client_socket.recv(1024)
@@ -91,8 +90,6 @@ def handle_client(client_socket):
                     send(client_socket, "Username has already been taken")
                     client_socket.close()
                    
-
-            
         except Exception as e:
             print(f"error: {e}")
             traceback.print_exc()
